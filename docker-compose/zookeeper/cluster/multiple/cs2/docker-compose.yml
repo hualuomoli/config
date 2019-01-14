@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+  # 不同docker需要暴露2888、3888
+  # 同一docker可以使用 服务名:2888:3888连接
+  # 不同docker使用 主机IP:暴露2888:暴露3888(主机IP可以使用域名代替,需要修改hosts文件)
+  # 1号docker zk1 zk2 zk3
+  # 2号docker zk4 zk5
+  # 3号docker zk6 zk7
+  zk4:
+    container_name: cluster_multiple_cs2_1
+    restart: always
+    image: zookeeper
+    ports:
+      - '22171:2181'
+      - '22878:2888'
+      - '23878:3888'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/hosts:/etc/hosts'
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/zk4/data:/data'
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/zk4/log:/datalog'
+    environment:
+      ZOO_MY_ID: 4
+      ZOO_SERVERS: server.1=zk1:12878:13878 server.2=zk2:12868:13868 server.3=zk3:12858:13858 server.4=zk4:2888:3888 server.5=zk5:2888:3888 server.6=zk6:32878:33878 server.7=zk7:32868:33868
+
+  zk5:
+    container_name: cluster_multiple_cs2_2
+    restart: always
+    image: zookeeper
+    ports:
+      - '22161:2181'
+      - '22868:2888'
+      - '23868:3888'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/hosts:/etc/hosts'
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/zk5/data:/data'
+      - '/opt/compose/zookeeper/cluster/multiple/cs2/zk5/log:/datalog'
+    environment:
+      ZOO_MY_ID: 5
+      ZOO_SERVERS: server.1=zk1:12878:13878 server.2=zk2:12868:13868 server.3=zk3:12858:13858 server.4=zk4:2888:3888 server.5=zk5:2888:3888 server.6=zk6:32878:33878 server.7=zk7:32868:33868
+
+  

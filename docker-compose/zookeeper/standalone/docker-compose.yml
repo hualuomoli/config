@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  zookeeper:
+    container_name: zookeeper
+    restart: always
+    image: zookeeper
+    ports:
+      - '2181:2181'
+

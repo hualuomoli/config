@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+
+  # 同一个docker-compose中的zookeeper不需要暴露2888、3888
+  # 连接使用服务名:2888:3888 (不是容器名)
+  zoo1:
+    container_name: cluster_single_zoo1
+    restart: always
+    image: zookeeper
+    ports:
+      - '2171:2181'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/single/zoo1/data:/data'
+      - '/opt/compose/zookeeper/cluster/single/zoo1/log:/datalog'
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888  server.2=zoo2:2888:3888  server.3=zoo3:2888:3888 
+
+  zoo2:
+    container_name: cluster_single_zoo2
+    restart: always
+    image: zookeeper
+    ports:
+      - '2161:2181'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/single/zoo2/data:/data'
+      - '/opt/compose/zookeeper/cluster/single/zoo2/log:/datalog'
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888  server.2=zoo2:2888:3888  server.3=zoo3:2888:3888 
+
+  zoo3:
+    container_name: cluster_single_zoo3
+    restart: always
+    image: zookeeper
+    ports:
+      - '2151:2181'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/single/zoo3/data:/data'
+      - '/opt/compose/zookeeper/cluster/single/zoo3/log:/datalog'
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888  server.2=zoo2:2888:3888  server.3=zoo3:2888:3888 
+
+

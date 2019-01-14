@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+
+  # 不同docker需要暴露2888、3888
+  # 同一docker可以使用 服务名:2888:3888连接
+  # 不同docker使用 主机IP:暴露2888:暴露3888(主机IP可以使用域名代替,需要修改hosts文件)
+  # 1号docker zk1 zk2 zk3
+  # 2号docker zk4 zk5
+  # 3号docker zk6 zk7
+  zk1:
+    container_name: cluster_multiple_cs1_1
+    restart: always
+    image: zookeeper
+    ports:
+      - '12171:2181'
+      - '12878:2888'
+      - '13878:3888'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/hosts:/etc/hosts'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk1/data:/data'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk1/log:/datalog'
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zk1:2888:3888 server.2=zk2:2888:3888 server.3=zk3:2888:3888 server.4=zk4:22878:23878 server.5=zk5:22868:23868 server.6=zk6:32878:33878 server.7=zk7:32868:33868
+
+  zk2:
+    container_name: cluster_multiple_cs1_2
+    restart: always
+    image: zookeeper
+    ports:
+      - '12161:2181'
+      - '12868:2888'
+      - '13868:3888'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/hosts:/etc/hosts'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk2/data:/data'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk2/log:/datalog'
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zk1:2888:3888 server.2=zk2:2888:3888 server.3=zk3:2888:3888 server.4=zk4:22878:23878 server.5=zk5:22868:23868 server.6=zk6:32878:33878 server.7=zk7:32868:33868
+
+  zk3:
+    container_name: cluster_multiple_cs1_3
+    restart: always
+    image: zookeeper
+    ports:
+      - '12151:2181'
+      - '12858:2888'
+      - '13858:3888'
+    volumes:
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/hosts:/etc/hosts'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk3/data:/data'
+      - '/opt/compose/zookeeper/cluster/multiple/cs1/zk3/log:/datalog'
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zk1:2888:3888 server.2=zk2:2888:3888 server.3=zk3:2888:3888 server.4=zk4:22878:23878 server.5=zk5:22868:23868 server.6=zk6:32878:33878 server.7=zk7:32868:33868
+
+  
