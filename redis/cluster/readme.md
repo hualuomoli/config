@@ -20,22 +20,13 @@ redis6 | 192.168.59.106
 `yum install -y gcc-c++`
 
 
-
-## 安装jemalloc
-+ `yum install -y bzip2`
-+ `wget https://github.com/jemalloc/jemalloc/releases/download/5.1.0/jemalloc-5.1.0.tar.bz2`
-+ `tar -xvf jemalloc-5.1.0.tar.bz2`
-+ `cd jemalloc-5.1.0`
-+ `./configure`
-+ `make & make install`
-
 # 安装redis
 这里以`5.0.3`版本为例,安装到`/opt`目录 <br />
 
 + `wget http://download.redis.io/releases/redis-5.0.3.tar.gz`
 + `tar -zxvf redis-5.0.3.tar.gz`
 + `cd redis-5.0.3`
-+ `make PREFIX=/opt/redis-5.0.3 install`
++ `make install PREFIX=/opt/redis-5.0.3`
 
 
 # 启动 Redis服务
@@ -45,7 +36,7 @@ redis6 | 192.168.59.106
 + 修改redis.conf
 
 ```
-bind ::1                         # 不同服务器修改成不同的值
+bind ::1                         # 绑定IP地址
 port 6379                        # 端口
 appendonly yes                   # 持久化
 cluster-enabled yes              # 开启集群
