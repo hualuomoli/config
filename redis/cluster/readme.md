@@ -1,15 +1,17 @@
 # Redis集群
 
+# 前置必读
+
+1、安装依赖 `yum install -y gcc-c++`
+2、安装目录 `/opt/redis-5.0.3`
+
 # 安装Redis
 
 + 安装依赖 `yum install -y gcc-c++`
 + 下载 `wget http://download.redis.io/releases/redis-5.0.3.tar.gz`
 + 解压 `tar -zxvf redis-5.0.3.tar.gz`
-+ 安装 (安装到`/opt`目录下)
-```
-cd redis-5.0.3
-make install PREFIX=/opt/redis-5.0.3
-```
++ 进入 `cd redis-5.0.3`
++ 安装 make install PREFIX=/opt/redis-5.0.3
 + 添加到系统环境变量 `echo PATH=\$PATH:/opt/redis-5.0.3/bin >> /etc/profile`
 + 刷新环境变量 `source /etc/profile`
 
@@ -19,17 +21,22 @@ make install PREFIX=/opt/redis-5.0.3
 
 # 配置工作节点
 测试使用3台机器，每台机器配置6个节点
+
++ 创建工作目录 `mkdir -p /opt/redis-5.0.3/worker`
 + 进入工作目录 `cd /opt/redis-5.0.3/worker`
-+ 复制`redis`配置文件 `cp /root/redis-5.0.3 ./`
-+ 修改配置文件为集群模式 `sed -i /s/cluster-enabled no/cluster-enabled yes/g ./redis.conf`
++ 复制`redis`配置文件 `cp /root/redis-5.0.3/redis.conf ./`
++ 修改配置文件为集群模式 `vi ./redis.conf`
+```
+cluster-enabled yes    # 开启集群
+```
 
 
-+ 节点1 `mkdir redis01 & cp ./redis.conf ./redis01 & sed -i '/s/6379/7001/g' ./redis01/redis.conf`
-+ 节点2 `mkdir redis02 & cp ./redis.conf ./redis02 & sed -i '/s/6379/7002/g' ./redis02/redis.conf`
-+ 节点3 `mkdir redis03 & cp ./redis.conf ./redis03 & sed -i '/s/6379/7003/g' ./redis03/redis.conf`
-+ 节点4 `mkdir redis04 & cp ./redis.conf ./redis04 & sed -i '/s/6379/7004/g' ./redis04/redis.conf`
-+ 节点5 `mkdir redis05 & cp ./redis.conf ./redis05 & sed -i '/s/6379/7005/g' ./redis05/redis.conf`
-+ 节点6 `mkdir redis06 & cp ./redis.conf ./redis06 & sed -i '/s/6379/7006/g' ./redis06/redis.conf`
++ 节点1 `mkdir redis01 & cp ./redis.conf ./redis01 & sed -i 's/6379/7001/g' ./redis01/redis.conf`
++ 节点2 `mkdir redis02 & cp ./redis.conf ./redis02 & sed -i 's/6379/7002/g' ./redis02/redis.conf`
++ 节点3 `mkdir redis03 & cp ./redis.conf ./redis03 & sed -i 's/6379/7003/g' ./redis03/redis.conf`
++ 节点4 `mkdir redis04 & cp ./redis.conf ./redis04 & sed -i 's/6379/7004/g' ./redis04/redis.conf`
++ 节点5 `mkdir redis05 & cp ./redis.conf ./redis05 & sed -i 's/6379/7005/g' ./redis05/redis.conf`
++ 节点6 `mkdir redis06 & cp ./redis.conf ./redis06 & sed -i 's/6379/7006/g' ./redis06/redis.conf`
 + 其它机器同样配置
 
 
