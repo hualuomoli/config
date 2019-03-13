@@ -102,5 +102,5 @@ echo $HOST_REDIS_3 redis-cluster-3 >> /etc/hosts
 ```
 重启网络
 ```
-sysetmctl restart network
+systemctl restart network
 ```
