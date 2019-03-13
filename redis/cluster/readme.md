@@ -10,6 +10,12 @@ yum install -y gcc-c++
 ```
 export REDIS_PATH=/opt/redis-5.0.3
 ```
+集群机器
+```
+export HOST_REDIS_1=192.168.1.101
+export HOST_REDIS_2=192.168.1.102
+export HOST_REDIS_3=192.168.1.103
+```
 
 # 安装Redis
 
@@ -90,7 +96,11 @@ cd $REDIS_PATH/worker/redis06 && redis-server ./redis.conf &
 
 
 ```
-echo 192.168.1.101 redis-cluster-1 >> /etc/hosts
-echo 192.168.1.102 redis-cluster-2 >> /etc/hosts
-echo 192.168.1.103 redis-cluster-3 >> /etc/hosts
+echo $HOST_REDIS_1 redis-cluster-1 >> /etc/hosts
+echo $HOST_REDIS_2 redis-cluster-2 >> /etc/hosts
+echo $HOST_REDIS_3 redis-cluster-3 >> /etc/hosts
+```
+重启网络
+```
+sysetmctl restart network
 ```
