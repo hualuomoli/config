@@ -53,7 +53,7 @@ systemctl stop firewalld
 
 修改配置文件为集群模式 
 ```
-sed 's/# cluster-enabled yes/cluster-enabled yes/g' > $REDIS_PATH/redis-cluster.conf
+sed 's/# cluster-enabled yes/cluster-enabled yes/g' $REDIS_PATH/redis.conf > $REDIS_PATH/redis-cluster.conf
 ```
 创建工作目录          
 ```
