@@ -9,7 +9,7 @@ yum install -y gcc-c++
 
 安装目录 
 ```
-export REDIS_PATH=/opt/redis-5.0.3 >> /etc/profile
+export REDIS_PATH=/opt/redis-5.0.3
 ```
 
 # 安装Redis
@@ -138,9 +138,9 @@ ps -ef | grep redis
 
 # 配置机器IP
 ```
-export HOST1=192.168.59.101 >> /etc/profile
-export HOST2=192.168.59.102 >> /etc/profile
-export HOST3=192.168.59.103 >> /etc/profile
+export HOST1=192.168.59.101
+export HOST2=192.168.59.102
+export HOST3=192.168.59.103
 ```
 
 执行命令
@@ -148,4 +148,12 @@ export HOST3=192.168.59.103 >> /etc/profile
 redis-cli --cluster create \
 --cluster-replicas 1 \
 $HOST1:7001 $HOST1:7002 $HOST1:7003 $HOST1:7004 $HOST1:7005 $HOST1:7006 \
+$HOST2:7001 $HOST2:7002 $HOST2:7003 $HOST2:7004 $HOST2:7005 $HOST2:7006 \
+$HOST3:7001 $HOST3:7002 $HOST3:7003 $HOST3:7004 $HOST3:7005 $HOST3:7006
+```
+
+
+# 杀死进程
+```
+ps aux | grep redis| grep -v grep | awk '{print $2}' | xargs kill -9
 ```
