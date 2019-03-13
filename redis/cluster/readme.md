@@ -25,10 +25,7 @@
 + 创建工作目录 `mkdir -p /opt/redis-5.0.3/worker`
 + 进入工作目录 `cd /opt/redis-5.0.3/worker`
 + 复制`redis`配置文件 `cp /root/redis-5.0.3/redis.conf ./`
-+ 修改配置文件为集群模式 `vi ./redis.conf`
-```
-cluster-enabled yes    # 开启集群
-```
++ 修改配置文件为集群模式 `sed -i 's/# cluster-enabled yes/cluster-enabled yes/g' ./redis.conf`
 
 
 + 节点1 `mkdir redis01 && cp ./redis.conf ./redis01/redis.conf && sed -i 's/6379/7001/g' ./redis01/redis.conf`
