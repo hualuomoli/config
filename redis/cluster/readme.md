@@ -2,8 +2,8 @@
 
 # 前置必读
 
-1、安装依赖 `yum install -y gcc-c++`
-2、安装目录 `/opt/redis-5.0.3`
++ 安装依赖 `yum install -y gcc-c++`
++ 安装目录 `/opt/redis-5.0.3`
 
 # 安装Redis
 
