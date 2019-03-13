@@ -1,48 +1,53 @@
 # Redis集群
 
-# 集群服务器
-这里使用的虚拟机搭建 <br />
+# 安装Redis
 
-
-
-服务器 | IP地址
--|-
-redis1 | 192.168.59.101
-redis2 | 192.168.59.102
-redis3 | 192.168.59.103
-redis4 | 192.168.59.104
-redis5 | 192.168.59.105
-redis6 | 192.168.59.106
-
-# 安装依赖
-
-## 安装gcc
-`yum install -y gcc-c++`
-
-
-# 安装redis
-这里以`5.0.3`版本为例,安装到`/opt`目录 <br />
-
-+ `wget http://download.redis.io/releases/redis-5.0.3.tar.gz`
-+ `tar -zxvf redis-5.0.3.tar.gz`
-+ `cd redis-5.0.3`
-+ `make install PREFIX=/opt/redis-5.0.3`
-
-
-# 启动 Redis服务
-
-+ 创建工作目录 `mkdir /opt/redis/work`
-+ 复制`redis.conf`到工作目录 `cp redis.conf /opt/redis/work`
-+ 修改redis.conf
-
++ 安装依赖 `yum install -y gcc-c++`
++ 下载 `wget http://download.redis.io/releases/redis-5.0.3.tar.gz`
++ 解压 `tar -zxvf redis-5.0.3.tar.gz`
++ 安装 (安装到`/opt`目录下)
 ```
-bind ::1                         # 绑定IP地址
-port 6379                        # 端口
-appendonly yes                   # 持久化
-cluster-enabled yes              # 开启集群
-cluster-config-file nodes.conf   # 集群配置文件
-cluster-node-timeout 15000       # 集群超时时间
-daemonize yes                    # 守护线程
+cd redis-5.0.3
+make install PREFIX=/opt/redis-5.0.3
 ```
-+ 启动服务 `redis-server ./redis.conf`
++ 添加到系统环境变量 `echo PATH=\$PATH:/opt/redis-5.0.3/bin >> /etc/profile`
++ 刷新环境变量 `source /etc/profile`
 
+# 关闭防火墙
+`systemctl stop firewalld`
+
+
+# 配置工作节点
+测试使用3台机器，每台机器配置6个节点
++ 进入工作目录 `cd /opt/redis-5.0.3/worker`
++ 复制`redis`配置文件 `cp /root/redis-5.0.3 ./`
++ 修改配置文件为集群模式 `sed -i /s/cluster-enabled no/cluster-enabled yes/g ./redis.conf`
+
+
++ 节点1 `mkdir redis01 & cp ./redis.conf ./redis01 & sed -i '/s/6379/7001/g' ./redis01/redis.conf`
++ 节点2 `mkdir redis02 & cp ./redis.conf ./redis02 & sed -i '/s/6379/7002/g' ./redis02/redis.conf`
++ 节点3 `mkdir redis03 & cp ./redis.conf ./redis03 & sed -i '/s/6379/7003/g' ./redis03/redis.conf`
++ 节点4 `mkdir redis04 & cp ./redis.conf ./redis04 & sed -i '/s/6379/7004/g' ./redis04/redis.conf`
++ 节点5 `mkdir redis05 & cp ./redis.conf ./redis05 & sed -i '/s/6379/7005/g' ./redis05/redis.conf`
++ 节点6 `mkdir redis06 & cp ./redis.conf ./redis06 & sed -i '/s/6379/7006/g' ./redis06/redis.conf`
++ 其它机器同样配置
+
+
+# 启动redis节点
+
++ 启动节点1 `cd /opt/redis-5.0.3/worker/redis01 & redis-server ./redis.conf`
++ 启动节点2 `cd /opt/redis-5.0.3/worker/redis02 & redis-server ./redis.conf`
++ 启动节点3 `cd /opt/redis-5.0.3/worker/redis03 & redis-server ./redis.conf`
++ 启动节点4 `cd /opt/redis-5.0.3/worker/redis04 & redis-server ./redis.conf`
++ 启动节点5 `cd /opt/redis-5.0.3/worker/redis05 & redis-server ./redis.conf`
++ 启动节点6 `cd /opt/redis-5.0.3/worker/redis06 & redis-server ./redis.conf`
++ 其它机器同样启动
+
+
+
+# 集群
+
+## 修改hosts文件，映射域名与实际IP地址
++ 添加集群机器1 `echo 192.168.1.101 redis-cluster-1`
++ 添加集群机器2 `echo 192.168.1.102 redis-cluster-2`
++ 添加集群机器3 `echo 192.168.1.103 redis-cluster-3`
