@@ -1,20 +1,28 @@
 # Redis集群
 
-# 前置必读
-
-安装依赖 
+#  安装依赖 
 ```
 yum install -y gcc-c++
 ```
+
+# 配置环境变量
+
 安装目录 
 ```
-export REDIS_PATH=/opt/redis-5.0.3
+echo  >> /etc/profile
+echo REDIS_PATH=/opt/redis-5.0.3 >> /etc/profile
+echo RUBY_PATH=/opt/ruby-2.6.1 >> /etc/profile
 ```
 集群机器
 ```
-export HOST_REDIS_1=192.168.1.101
-export HOST_REDIS_2=192.168.1.102
-export HOST_REDIS_3=192.168.1.103
+echo  >> /etc/profile
+echo HOST_REDIS_1=192.168.1.101 >> /etc/profile
+echo HOST_REDIS_2=192.168.1.102 >> /etc/profile
+echo HOST_REDIS_3=192.168.1.103 >> /etc/profile
+```
+刷新环境变量 
+```
+source /etc/profile
 ```
 
 # 安装Redis
@@ -57,22 +65,64 @@ systemctl stop firewalld
 # 配置工作节点
 测试使用3台机器，每台机器配置6个节点
 
-修改配置文件为集群模式 
-```
-sed 's/# cluster-enabled yes/cluster-enabled yes/g' $REDIS_PATH/redis.conf > $REDIS_PATH/redis-cluster.conf
-```
 创建工作目录          
 ```
 mkdir -p $REDIS_PATH/worker/{redis01,redis02,redis03,redis04,redis05,redis06}
 ```
-创建节点配置文件 
+创建节点配置文件
++ 节点1
 ```
-sed 's/6379/7001/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis01/redis.conf
-sed 's/6379/7002/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis02/redis.conf
-sed 's/6379/7003/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis03/redis.conf
-sed 's/6379/7004/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis04/redis.conf
-sed 's/6379/7005/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis05/redis.conf
-sed 's/6379/7006/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis06/redis.conf
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7001/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis01/redis.conf
+```
++ 节点2
+```
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7002/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis02/redis.conf
+```
++ 节点3
+```
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7003/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis03/redis.conf
+```
++ 节点4
+```
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7004/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis04/redis.conf
+```
++ 节点5
+```
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7005/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis05/redis.conf
+```
++ 节点6
+```
+sed \
+-e 's/^bind 127.0.0.1$/bind ::1/g' \
+-e 's/^port 6379$/port 7006/g' \
+-e 's/^daemonize no$/daemonize yes/g' \
+-e 's/^# cluster-enabled yes$/cluster-enabled yes/g' \
+$REDIS_PATH/redis.conf > $REDIS_PATH/worker/redis06/redis.conf
 ```
 + 其它机器同样配置
 
@@ -80,27 +130,61 @@ sed 's/6379/7006/g' $REDIS_PATH/redis-cluster.conf > $REDIS_PATH/worker/redis06/
 # 启动redis节点
 
 ```
-cd $REDIS_PATH/worker/redis01 && redis-server ./redis.conf &
-cd $REDIS_PATH/worker/redis02 && redis-server ./redis.conf &
-cd $REDIS_PATH/worker/redis03 && redis-server ./redis.conf &
-cd $REDIS_PATH/worker/redis04 && redis-server ./redis.conf &
-cd $REDIS_PATH/worker/redis05 && redis-server ./redis.conf &
-cd $REDIS_PATH/worker/redis06 && redis-server ./redis.conf &
+cd $REDIS_PATH/worker/redis01 && redis-server ./redis.conf
+cd $REDIS_PATH/worker/redis02 && redis-server ./redis.conf
+cd $REDIS_PATH/worker/redis03 && redis-server ./redis.conf
+cd $REDIS_PATH/worker/redis04 && redis-server ./redis.conf
+cd $REDIS_PATH/worker/redis05 && redis-server ./redis.conf
+cd $REDIS_PATH/worker/redis06 && redis-server ./redis.conf
 ```
 其它机器同样启动
 
 
 # 集群
 
-## 修改hosts文件，映射域名与实际IP地址
+## Rbuy
 
+下载
+```
+wget https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.1.tar.gz
+```
+解压
+```
+tar -zxvf ruby-2.6.1.tar.gz
+```
+进入Ruby安装目录
+```
+cd ruby-2.6.1
+```
+安装
+```
+./configure --prefix=$RUBY_PATH
+make
+make install
+```
+```
+添加到系统环境变量 
+```
+echo PATH=\$PATH:$RUBY_PATH/bin >> /etc/profile
+```
+刷新环境变量 
+```
+source /etc/profile
+```
+
+## RubyGems
+
+下载
+```
+wget https://rubygems.org/rubygems/rubygems-3.0.3.tgz
+```
+解压
+```
+tar -zxvf rubygems-3.0.3.tgz
+```
+
+## 集群
 
 ```
-echo $HOST_REDIS_1 redis-cluster-1 >> /etc/hosts
-echo $HOST_REDIS_2 redis-cluster-2 >> /etc/hosts
-echo $HOST_REDIS_3 redis-cluster-3 >> /etc/hosts
-```
-重启网络
-```
-systemctl restart network
+redis-cli --cluster create --cluster-replicas 1 $HOST_REDIS_1:7001 $HOST_REDIS_1:7002 $HOST_REDIS_1:7003
 ```
