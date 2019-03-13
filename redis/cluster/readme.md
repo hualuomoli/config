@@ -31,12 +31,12 @@ cluster-enabled yes    # 开启集群
 ```
 
 
-+ 节点1 `mkdir redis01 & cp ./redis.conf ./redis01/redis.conf & sed -i 's/6379/7001/g' ./redis01/redis.conf`
-+ 节点2 `mkdir redis02 & cp ./redis.conf ./redis02/redis.conf & sed -i 's/6379/7002/g' ./redis02/redis.conf`
-+ 节点3 `mkdir redis03 & cp ./redis.conf ./redis03/redis.conf & sed -i 's/6379/7003/g' ./redis03/redis.conf`
-+ 节点4 `mkdir redis04 & cp ./redis.conf ./redis04/redis.conf & sed -i 's/6379/7004/g' ./redis04/redis.conf`
-+ 节点5 `mkdir redis05 & cp ./redis.conf ./redis05/redis.conf & sed -i 's/6379/7005/g' ./redis05/redis.conf`
-+ 节点6 `mkdir redis06 & cp ./redis.conf ./redis06/redis.conf & sed -i 's/6379/7006/g' ./redis06/redis.conf`
++ 节点1 `mkdir redis01 && cp ./redis.conf ./redis01/redis.conf && sed -i 's/6379/7001/g' ./redis01/redis.conf`
++ 节点2 `mkdir redis02 && cp ./redis.conf ./redis02/redis.conf && sed -i 's/6379/7002/g' ./redis02/redis.conf`
++ 节点3 `mkdir redis03 && cp ./redis.conf ./redis03/redis.conf && sed -i 's/6379/7003/g' ./redis03/redis.conf`
++ 节点4 `mkdir redis04 && cp ./redis.conf ./redis04/redis.conf && sed -i 's/6379/7004/g' ./redis04/redis.conf`
++ 节点5 `mkdir redis05 && cp ./redis.conf ./redis05/redis.conf && sed -i 's/6379/7005/g' ./redis05/redis.conf`
++ 节点6 `mkdir redis06 && cp ./redis.conf ./redis06/redis.conf && sed -i 's/6379/7006/g' ./redis06/redis.conf`
 + 其它机器同样配置
 
 
