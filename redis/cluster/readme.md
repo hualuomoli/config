@@ -33,7 +33,7 @@ make install PREFIX=$REDIS_PATH
 添加到系统环境变量 
 ```
 echo  >> /etc/profile
-echo # Redis >> /etc/profile
+echo '# Redis' >> /etc/profile
 echo PATH=\$PATH:$REDIS_PATH/bin >> /etc/profile
 ```
 刷新环境变量 
