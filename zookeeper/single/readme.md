@@ -1,9 +1,8 @@
 # Zookeeper单点
 
 #  安装依赖 
-```
-zookeeper 依赖[JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
-```
+
++ zookeeper 依赖[JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 # 配置环境变量
 
