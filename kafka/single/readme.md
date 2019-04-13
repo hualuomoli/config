@@ -38,6 +38,13 @@ source /etc/profile
 systemctl stop firewalld
 ```
 
+# 配置Kafka
+
+1、修改kafka配置文件`vi $KAFKA_PATH/config/server.properties`
+```
+listeners=PLAINTEXT://your.host.name:9092
+```
+
 # 启动Kafka
 
 ```
