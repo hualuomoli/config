@@ -84,6 +84,11 @@ vm.max_map_count=655360
 shutdown -r now
 ```
 
+# 启动
+```
+$ELASTICSEARCH_PATH/bin/elasticsearch
+```
+
 # 查询Elastic Search状态
 ```
 ps -ef | grep elasticsearch
@@ -95,6 +100,8 @@ ps aux | grep elasticsearch| grep -v grep | awk '{print $2}' | xargs kill -9
 ```
 
 # 错误
+```
 [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
 [2]: max number of threads [3796] for user [es] is too low, increase to at least [4096]
 [3]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
