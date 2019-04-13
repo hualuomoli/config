@@ -62,8 +62,8 @@ http.port: 9200
 2、max file descriptors
 ```
 # vi /etc/security/limits.conf
-es soft nofile 65536
-es hard nofile 65536
+elasticsearch soft nofile 65536
+elasticsearch hard nofile 65536
 ```
 
 3、max number of threads
