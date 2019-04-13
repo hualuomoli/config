@@ -28,7 +28,7 @@ cd ~
 
 下载 
 ```
-https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-linux-x86_64.tar.gz
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-linux-x86_64.tar.gz
 ```
 解压 
 ```
