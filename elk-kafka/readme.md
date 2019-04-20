@@ -58,8 +58,8 @@ shutdown -r now
 
 # JDK
 
-+ [下载](https://download.oracle.com/otn/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/jdk-8u202-linux-x64.tar.gz) [更多](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
-+ 解压到`/opt`目录 `tar -zxvf jdk-8u202-linux-x64.tar.gz -C /opt`
++ [下载](http://download.oracle.com/otn/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/jdk-8u192-linux-x64.tar.gz) [更多](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
++ 解压到`/opt`目录 `tar -zxvf jdk-8u192-linux-x64.tar.gz -C /opt`
 + 配置到环境变量
 ```
 echo >> /etc/profile
