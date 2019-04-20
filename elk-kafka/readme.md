@@ -85,7 +85,7 @@ cp /opt/zookeeper-3.4.14/conf/zoo_sample.cfg /opt/zookeeper-3.4.14/conf/zoo.cfg
 ```
 + 启动`zookeeper`
 ```
-sh /opt/zookeeper-3.4.14/bin/zkServer.sh start
+/opt/zookeeper-3.4.14/bin/zkServer.sh start
 ```
 + 查看`zookeeper`状态 `netstat -anp|grep 2181`
 ```
@@ -174,9 +174,9 @@ output {
 ```
 + 启动测试配置
 ```
-nohup /opt/logstash-6.6.1/bin/logstash -f /opt/logstash-6.6.1/config/logstash-demo.conf &
+nohup /opt/logstash-6.6.1/bin/logstash -f /opt/logstash-6.6.1/config/logstash-demo.conf > ./logstash-demo.log 2>&1 &
 ```
-+ 查看`logstash`状态 `netstat -anp|grep logstash`
++ 查看`logstash`状态 `ps -ef | grep logstash`
 
 # Kibana
 
@@ -191,7 +191,7 @@ elasticsearch.hosts: ["http://elk.com:9200"]
 ```
 + 启动`kibana` 
 ```
-nohup /opt/kibana-6.6.1-linux-x86_64/bin/kibana &
+nohup /opt/kibana-6.6.1-linux-x86_64/bin/kibana > ./kibana.log 2>&1 &
 ```
 + 查看`kibana`状态 `netstat -anp|grep 5601`
 ```
