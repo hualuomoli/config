@@ -64,7 +64,8 @@ shutdown -r now
 ```
 echo >> /etc/profile
 echo '# JDK' >> /etc/profile
-echo '/opt/jdk1.8.0_192' >> /etc/profile
+echo 'JAVA_HOME=/opt/jdk1.8.0_192'
+echo 'PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
 ```
 + 刷新环境变量 `source /etc/profile`
 + 查看是否配置成功 `java -version`
